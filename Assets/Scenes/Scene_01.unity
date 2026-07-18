@@ -790,50 +790,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 425409564}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1 &751502137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 751502139}
-  - component: {fileID: 751502138}
-  m_Layer: 0
-  m_Name: Debug
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &751502138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751502137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8f5b3b2e76bbf14abbea51d8f859923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Test
---- !u!4 &751502139
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751502137}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &793090370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2065,7 +2021,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 333487972}
   - {fileID: 1836862055}
-  - {fileID: 751502139}
   - {fileID: 425409564}
   - {fileID: 550333474}
   - {fileID: 1056038075}

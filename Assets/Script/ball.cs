@@ -31,7 +31,9 @@ public class ball : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(point);
+
+        GameManager.instance.PlayerScore += point;
+        Destroy(gameObject);
         //switch (color)
         //{
         //    case BallColor.Red:
