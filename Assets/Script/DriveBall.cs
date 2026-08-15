@@ -1,5 +1,9 @@
 using UnityEngine;
 
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
+
 [RequireComponent(typeof(Rigidbody))]
 public class DriveBall : MonoBehaviour
 {
@@ -21,11 +25,34 @@ public class DriveBall : MonoBehaviour
     {
         if (!canControl) return;
 
-        // หมุนซ้าย-ขวา ด้วยปุ่ม A/D หรือ ลูกศร ซ้าย/ขวา
-        float rotateInput = Input.GetAxis("Horizontal");
+        float rotateInput = 0f;
+        bool isMouseClick = false;
+
+        if (Keyboard.current != null)
+        {
+            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) rotateInput = -1f;
+            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) rotateInput = 1f;
+        }
+
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            isMouseClick = true;
+        }
+
+        rotateInput = Input.GetAxis("Horizontal");
+        isMouseClick = Input.GetMouseButtonDown(0);
+
+
+        // 1. หมุนลูกบอลด้วย A / D หรือ ลูกศร
         if (Mathf.Abs(rotateInput) > 0.01f)
         {
             Rotate(rotateInput);
+        }
+
+        // 2. ยิงลูกบอลเมื่อคลิกเมาส์ซ้าย 1 ครั้ง
+        if (isMouseClick)
+        {
+            OnFireButtonPressed();
         }
     }
 
@@ -34,17 +61,14 @@ public class DriveBall : MonoBehaviour
         transform.Rotate(0, direction * rotateSpeed * Time.deltaTime, 0);
     }
 
-    // ผูก Method นี้กับ UI Button (OnClick)
+    // เรียกยิงจาก UI Button หรือการคลิกเมาส์ซ้าย
     public void OnFireButtonPressed()
     {
         if (!canControl) return;
 
         DisableControl();
-
-        // ใส่แรงยิงไปข้างหน้าตามทิศทางแกน Z (forward) ของลูกขาว
         rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
 
-        // แจ้ง GameManager ว่าเริ่มการยิงแล้ว
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnShotExecuted();

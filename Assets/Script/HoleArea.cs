@@ -2,23 +2,18 @@ using UnityEngine;
 
 public class HoleArea : MonoBehaviour
 {
-    [Header("Pocket Settings")]
-    [SerializeField] private int pocketId = 1;
-
     private void OnTriggerEnter(Collider other)
     {
+        // เช็กว่าวัตถุที่ชนมีสคริปต์ BallNu หรือไม่
         BallNu ball = other.GetComponent<BallNu>();
+
         if (ball != null)
         {
-            SendBallToManager(ball);
-        }
-    }
-
-    public void SendBallToManager(BallNu ball)
-    {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnBallPotted(ball);
+            // ส่งลูกบอลไปให้ GameManager จัดการต่อทันที
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnBallPotted(ball);
+            }
         }
     }
 }

@@ -76,29 +76,53 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitUntilBallsStop());
     }
 
+
+    private float stopVelocityThreshold = 0.1f;
+
+    private float stopAngularVelocityThreshold = 0.1f;
+
     private IEnumerator WaitUntilBallsStop()
     {
+        // รอ 0.5 วินาทีแรกให้ลูกบอลได้รับแรงและขยับแน่นอนก่อน
         yield return new WaitForSeconds(0.5f);
 
         while (isMoving)
         {
-            isMoving = false;
+            bool anyBallStillMoving = false;
+
             foreach (BallNu ball in activeBalls)
             {
                 if (ball != null && ball.gameObject.activeInHierarchy)
                 {
-                    if (ball.Rb.linearVelocity.sqrMagnitude > stopThreshold ||
-                        ball.Rb.angularVelocity.sqrMagnitude > stopThreshold)
+                    Rigidbody rb = ball.Rb;
+
+                    // วัดความเร็วการเคลื่อนที่และความเร็วการหมุนในขณะนั้น
+                    float speed = rb.linearVelocity.magnitude;
+                    float angularSpeed = rb.angularVelocity.magnitude;
+
+                    // ถ้าช้ามากๆ (น้อยกว่าค่าขีดจำกัด) ให้บังคับหยุดทันที
+                    if (speed < stopVelocityThreshold && angularSpeed < stopAngularVelocityThreshold)
                     {
-                        isMoving = true;
-                        break;
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                        rb.Sleep(); 
+                    }
+                    else
+                    {
+
+                        anyBallStillMoving = true;
                     }
                 }
             }
-            yield return null;
-        }
 
-        ResetTurn();
+            // ถ้าไม่มีลูกไหนวิ่งอยู่แล้ว สรุปว่าจบตา ยิงต่อได้เลย
+            if (!anyBallStillMoving)
+            {
+                isMoving = false;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void OnBallPotted(BallNu ball)
