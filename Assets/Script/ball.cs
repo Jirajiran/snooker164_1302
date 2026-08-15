@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public enum BallColor
 {
@@ -7,89 +6,60 @@ public enum BallColor
     Red,
     Yellow,
     Green,
-    Brown, 
+    Brown,
     Blue,
     Pink,
     Black
 }
-public class ball : MonoBehaviour, IPointerClickHandler
+
+public class ball : MonoBehaviour
 {
-    [SerializeField]
-    private int point;
+    [SerializeField] int point;
 
-    [SerializeField]
-    private BallColor colorB;
+    MeshRenderer meshRenderer;
+    Collider col;
 
-    private MeshRenderer mr;
+    public int Point => point;
+    public bool IsCue => point == 0;
 
-
-    private void Awake()
+    void Awake()
     {
-        mr = GetComponent<MeshRenderer>();
-    }
-    void Start()
-    {
-
+        meshRenderer = GetComponent<MeshRenderer>();
+        col = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Apply(int p, Material mat)
     {
-        
+        point = p;
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
+        if (mat != null && meshRenderer != null)
+            meshRenderer.material = mat;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void HideBall()
     {
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
+        if (col == null)
+            col = GetComponent<Collider>();
 
-        GameManager.instance.PlayerScore += point;
-        Destroy(gameObject);
-        //switch (color)
-        //{
-        //    case BallColor.Red:
-        //        GameManager.instance.PlayerScore += point;
-        //        break;
-        //    case BallColor.Black:
-        //        GameManager.instance.PlayerScore += point;
-        //        break;
-        //}
+        if (meshRenderer != null)
+            meshRenderer.enabled = false;
+        if (col != null)
+            col.enabled = false;
     }
 
-    public void SetColorAndPoint(BallColor colorB)
+    public void ShowBall()
     {
-       switch(colorB)
-        {
-            case BallColor.White:
-                point = 0;
-                mr.material.color = Color.white;
-                break;
-            case BallColor.Red:
-                point = 1;
-                mr.material.color = Color.red;
-                break;
-            case BallColor.Yellow:
-                point = 2;
-                mr.material.color = Color.yellow;
-                break;
-            case BallColor.Green:
-                point = 3;
-                mr.material.color = Color.green;
-                break;
-            case BallColor.Brown:
-                point = 4;
-                mr.material.color = new Color(0.6f, 0.3f, 0.1f);
-                break;
-            case BallColor.Blue:
-                point = 5;
-                mr.material.color = Color.blue;
-                break;
-            case BallColor.Pink:
-                point = 6;
-                mr.material.color = new Color(1f, 0.4f, 0.7f);
-                break;
-            case BallColor.Black:
-                point = 7;
-                mr.material.color = Color.black;
-                break;
-        }
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
+        if (col == null)
+            col = GetComponent<Collider>();
+
+        if (meshRenderer != null)
+            meshRenderer.enabled = true;
+        if (col != null)
+            col.enabled = true;
     }
 }
