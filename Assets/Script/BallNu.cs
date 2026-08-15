@@ -2,14 +2,14 @@ using UnityEngine;
 
 public enum BallType
 {
-    Cue,     // 0 แต้ม (ขาว)
-    Red,     // 1 แต้ม (แดง)
-    Yellow,  // 2 แต้ม (เหลือง)
-    Green,   // 3 แต้ม (เขียว)
-    Brown,   // 4 แต้ม (น้ำตาล)
-    Blue,    // 5 แต้ม (น้ำเงิน)
-    Pink,    // 6 แต้ม (ชมพู)
-    Black    // 7 แต้ม (ดำ)
+    Cue,     // ลูกขาว (0 คะแนน)
+    Red,     // ลูกแดง (1 คะแนน)
+    Yellow,  // ลูกเหลือง (2 คะแนน)
+    Green,   // ลูกเขียว (3 คะแนน)
+    Brown,   // ลูกน้ำตาล (4 คะแนน)
+    Blue,    // ลูกน้ำเงิน (5 คะแนน)
+    Pink,    // ลูกชมพู (6 คะแนน)
+    Black    // ลูกดำ (7 คะแนน)
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -17,42 +17,47 @@ public class BallNu : MonoBehaviour
 {
     [Header("Ball Properties")]
     public BallType ballType = BallType.Red;
-    [SerializeField] private int pointValue = 1;
+
+    [SerializeField] private int pointValue = 1; // แสดงใน Inspector แต่แก้ไขจาก Script อื่นไม่ได้
 
     public Rigidbody Rb { get; private set; }
-    private Renderer ballRenderer;
-    private static MaterialPropertyBlock propBlock;
+    private Collider col;
+
+    // กันเรียก OnPotted ซ้ำ (แก้ปัญหา trigger "ซ้อน")
+    public bool IsPotted { get; private set; } = false;
+
+    // ตำแหน่ง/หมุนตอนเกิดครั้งแรก - เป็น "แหล่งความจริงเดียว" (single source of truth)
+    // ให้ทั้งการ reset ลูกขาวและ restart ทั้งกระดานเรียกใช้จุดเดียวกัน ไม่ต้องวน loop หา spawnPoint ซ้ำ
+    public Vector3 SpawnPosition { get; private set; }
+    public Quaternion SpawnRotation { get; private set; }
 
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        EnsureRenderer();
-        UpdateBallProperties();
+        col = GetComponent<Collider>();
+        UpdatePointValue();
     }
 
     private void OnValidate()
     {
-        EnsureRenderer();
-        UpdateBallProperties();
-    }
-
-    private void EnsureRenderer()
-    {
-        if (ballRenderer == null)
-        {
-            ballRenderer = GetComponent<Renderer>();
-        }
+        UpdatePointValue();
     }
 
     public void SetBallType(BallType type)
     {
         ballType = type;
-        UpdateBallProperties();
+        UpdatePointValue();
     }
 
-    private void UpdateBallProperties()
+    // เรียกจาก GameManager ตอน Spawn ครั้งแรกเท่านั้น
+    public void SetSpawnTransform(Vector3 pos, Quaternion rot)
     {
-        // 1. คำนวณแต้ม
+        SpawnPosition = pos;
+        SpawnRotation = rot;
+    }
+
+    private void UpdatePointValue()
+    {
         switch (ballType)
         {
             case BallType.Cue: pointValue = 0; break;
@@ -64,36 +69,47 @@ public class BallNu : MonoBehaviour
             case BallType.Pink: pointValue = 6; break;
             case BallType.Black: pointValue = 7; break;
         }
-
-        // 2. เปลี่ยนสีด้วย MaterialPropertyBlock (ปลอดภัย 100% ไม่ฟ้อง Error)
-        if (ballRenderer != null)
-        {
-            Color targetColor = Color.white;
-            switch (ballType)
-            {
-                case BallType.Cue: targetColor = Color.white; break;
-                case BallType.Red: targetColor = Color.red; break;
-                case BallType.Yellow: targetColor = Color.yellow; break;
-                case BallType.Green: targetColor = Color.green; break;
-                case BallType.Brown: targetColor = new Color(0.4f, 0.2f, 0.1f); break;
-                case BallType.Blue: targetColor = Color.blue; break;
-                case BallType.Pink: targetColor = new Color(1f, 0.41f, 0.71f); break;
-                case BallType.Black: targetColor = Color.black; break;
-            }
-
-            if (propBlock == null) propBlock = new MaterialPropertyBlock();
-
-            ballRenderer.GetPropertyBlock(propBlock);
-            propBlock.SetColor("_Color", targetColor);       // สำหรับ Built-in Render Pipeline
-            propBlock.SetColor("_BaseColor", targetColor);   // สำหรับ URP (Universal Render Pipeline)
-            ballRenderer.SetPropertyBlock(propBlock);
-        }
     }
 
     public int GetPoints() => pointValue;
 
     public void OnPotted()
     {
+        if (IsPotted) return;
+        IsPotted = true;
+
+        // ปิด Collider ทันที กัน HoleArea ยิง OnTriggerEnter ซ้ำ
+        if (col != null) col.enabled = false;
+
+        if (Rb != null)
+        {
+            Rb.linearVelocity = Vector3.zero;
+            Rb.angularVelocity = Vector3.zero;
+        }
+
         gameObject.SetActive(false);
+    }
+
+    public void ResetPottedState()
+    {
+        IsPotted = false;
+        if (col != null) col.enabled = true;
+    }
+
+    // คืนลูกบอลกลับไปที่ตำแหน่ง spawn เดิม + เปิดใช้งานใหม่ทั้งหมด
+    // ใช้ทั้งตอน GameManager.RestartGame() (แพ้แล้วเริ่มใหม่)
+    public void ResetToSpawn()
+    {
+        ResetPottedState();
+
+        transform.position = SpawnPosition;
+        transform.rotation = SpawnRotation;
+        gameObject.SetActive(true);
+
+        if (Rb != null)
+        {
+            Rb.linearVelocity = Vector3.zero;
+            Rb.angularVelocity = Vector3.zero;
+        }
     }
 }
