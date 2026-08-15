@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43465038}
+  - component: {fileID: 43465039}
   m_Layer: 0
   m_Name: PosBrown
   m_TagString: Untagged
@@ -150,6 +151,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43465039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43465037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 4
 --- !u!1 &88870110
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,13 +173,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 88870111}
+  - component: {fileID: 88870112}
   m_Layer: 0
-  m_Name: PosRed (1)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &88870111
 Transform:
   m_ObjectHideFlags: 0
@@ -175,12 +190,25 @@ Transform:
   m_GameObject: {fileID: 88870110}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0.1, z: 19}
+  m_LocalPosition: {x: -1, y: 0.099999994, z: 19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &88870112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88870110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &139345393
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 270322249}
+  - component: {fileID: 270322250}
   m_Layer: 0
   m_Name: PosPink
   m_TagString: Untagged
@@ -437,6 +466,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &270322250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270322248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 6
 --- !u!1 &333487969
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,13 +642,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 410191302}
+  - component: {fileID: 410191303}
   m_Layer: 0
-  m_Name: PosRed (14)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &410191302
 Transform:
   m_ObjectHideFlags: 0
@@ -616,12 +659,25 @@ Transform:
   m_GameObject: {fileID: 410191301}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0.1, z: 22}
+  m_LocalPosition: {x: -4, y: 0.099999994, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &410191303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410191301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &425409563
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +741,7 @@ Transform:
   m_GameObject: {fileID: 460182431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -695,21 +751,7 @@ Transform:
   - {fileID: 43465038}
   - {fileID: 270322249}
   - {fileID: 1953951087}
-  - {fileID: 1548692739}
-  - {fileID: 88870111}
-  - {fileID: 1650329855}
-  - {fileID: 1526920113}
-  - {fileID: 1762007967}
-  - {fileID: 765021591}
-  - {fileID: 1527536940}
-  - {fileID: 2003348430}
-  - {fileID: 819892404}
-  - {fileID: 1076283573}
-  - {fileID: 1669982268}
-  - {fileID: 1674871978}
-  - {fileID: 545919052}
-  - {fileID: 1435418703}
-  - {fileID: 410191302}
+  - {fileID: 1636656730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &545919051
@@ -721,13 +763,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545919052}
+  - component: {fileID: 545919053}
   m_Layer: 0
-  m_Name: PosRed (12)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &545919052
 Transform:
   m_ObjectHideFlags: 0
@@ -737,12 +780,25 @@ Transform:
   m_GameObject: {fileID: 545919051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.1, z: 22}
+  m_LocalPosition: {x: 2, y: 0.099999994, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545919053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545919051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &705239385
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,13 +920,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 765021591}
+  - component: {fileID: 765021592}
   m_Layer: 0
-  m_Name: PosRed (7)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &765021591
 Transform:
   m_ObjectHideFlags: 0
@@ -880,12 +937,25 @@ Transform:
   m_GameObject: {fileID: 765021590}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.1, z: 20}
+  m_LocalPosition: {x: 2, y: 0.099999994, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765021592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765021590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &819892403
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,13 +965,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 819892404}
+  - component: {fileID: 819892405}
   m_Layer: 0
-  m_Name: PosRed (8)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &819892404
 Transform:
   m_ObjectHideFlags: 0
@@ -911,12 +982,25 @@ Transform:
   m_GameObject: {fileID: 819892403}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0.1, z: 21}
+  m_LocalPosition: {x: -1.5, y: 0.099999994, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &819892405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819892403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &870899333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,8 +1123,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 878851425}
+  - component: {fileID: 878851426}
   m_Layer: 0
-  m_Name: PosWhite
+  m_Name: PosWhiteCue
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1061,6 +1146,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &878851426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878851424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 0
+--- !u!1001 &974190624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1641052732217031876, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: ballType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1641052732217031876, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: pointValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221001116008914744, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_Name
+      value: BallHere
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -19.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491849645332588346, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5221001116008914744, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 974190627}
+  m_SourcePrefab: {fileID: 100100000, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+--- !u!1 &974190626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5221001116008914744, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+  m_PrefabInstance: {fileID: 974190624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &974190627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974190626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45a39cc8b22271428832806a0dc53cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DriveBall
+  rotateSpeed: 100
+  shootForce: 500
+  canControl: 1
 --- !u!1 &1021275107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,13 +1480,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076283573}
+  - component: {fileID: 1076283574}
   m_Layer: 0
-  m_Name: PosRed (9)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1076283573
 Transform:
   m_ObjectHideFlags: 0
@@ -1310,12 +1497,25 @@ Transform:
   m_GameObject: {fileID: 1076283572}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0.1, z: 21}
+  m_LocalPosition: {x: 1.5, y: 0.099999994, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1076283574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076283572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1113254377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113254378}
+  - component: {fileID: 1113254379}
   m_Layer: 0
   m_Name: PosYellow
   m_TagString: Untagged
@@ -1347,6 +1548,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1113254379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113254377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 2
 --- !u!1 &1172073501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,7 +1684,7 @@ GameObject:
   - component: {fileID: 1391573174}
   - component: {fileID: 1391573173}
   m_Layer: 0
-  m_Name: Referee
+  m_Name: Referee_GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1488,16 +1702,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085ef9aa981183043938337e318a1570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerScore: 0
-  ballPositions:
-  - {fileID: 878851424}
-  - {fileID: 1113254377}
-  - {fileID: 1733881661}
-  - {fileID: 43465037}
-  - {fileID: 270322248}
-  - {fileID: 1953951086}
-  - {fileID: 1548692738}
+  cueBall: {fileID: 0}
+  scoreUI: {fileID: 0}
   ballPrefab: {fileID: 5221001116008914744, guid: 67733e8b72faec541a52997b89dccc7f, type: 3}
+  spawnPoints:
+  - {fileID: 1113254379}
+  - {fileID: 1733881663}
+  - {fileID: 43465039}
+  - {fileID: 270322250}
+  - {fileID: 1953951088}
+  - {fileID: 1548692740}
+  - {fileID: 88870112}
+  - {fileID: 1650329856}
+  - {fileID: 1526920114}
+  - {fileID: 1762007968}
+  - {fileID: 765021592}
+  - {fileID: 1527536941}
+  - {fileID: 2003348431}
+  - {fileID: 819892405}
+  - {fileID: 1076283574}
+  - {fileID: 1669982269}
+  - {fileID: 1674871979}
+  - {fileID: 545919053}
+  - {fileID: 1435418704}
+  - {fileID: 410191303}
+  activeBalls: []
+  allPointNu: 0
+  stopThreshold: 0.05
 --- !u!4 &1391573174
 Transform:
   m_ObjectHideFlags: 0
@@ -1522,13 +1753,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1435418703}
+  - component: {fileID: 1435418704}
   m_Layer: 0
-  m_Name: PosRed (13)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1435418703
 Transform:
   m_ObjectHideFlags: 0
@@ -1538,12 +1770,25 @@ Transform:
   m_GameObject: {fileID: 1435418702}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0.1, z: 22}
+  m_LocalPosition: {x: -2, y: 0.099999994, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1435418704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435418702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1526920112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,13 +1798,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1526920113}
+  - component: {fileID: 1526920114}
   m_Layer: 0
-  m_Name: PosRed (2)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1526920113
 Transform:
   m_ObjectHideFlags: 0
@@ -1569,12 +1815,25 @@ Transform:
   m_GameObject: {fileID: 1526920112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0.1, z: 20}
+  m_LocalPosition: {x: -2, y: 0.099999994, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1526920114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526920112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1527536939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,13 +1843,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1527536940}
+  - component: {fileID: 1527536941}
   m_Layer: 0
-  m_Name: PosRed (3)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1527536940
 Transform:
   m_ObjectHideFlags: 0
@@ -1600,12 +1860,25 @@ Transform:
   m_GameObject: {fileID: 1527536939}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 0.1, z: 21}
+  m_LocalPosition: {x: -3, y: 0.099999994, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1527536941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527536939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1548692738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,6 +1888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1548692739}
+  - component: {fileID: 1548692740}
   m_Layer: 0
   m_Name: PosRed
   m_TagString: Untagged
@@ -1631,12 +1905,25 @@ Transform:
   m_GameObject: {fileID: 1548692738}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 18}
+  m_LocalPosition: {x: 0, y: 0.099999994, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1548692740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548692738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1602830535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,6 +2003,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1636656729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636656730}
+  m_Layer: 0
+  m_Name: RedOnly
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1636656730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636656729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1548692739}
+  - {fileID: 88870111}
+  - {fileID: 1650329855}
+  - {fileID: 1526920113}
+  - {fileID: 1762007967}
+  - {fileID: 765021591}
+  - {fileID: 1527536940}
+  - {fileID: 2003348430}
+  - {fileID: 819892404}
+  - {fileID: 1076283573}
+  - {fileID: 1669982268}
+  - {fileID: 1674871978}
+  - {fileID: 545919052}
+  - {fileID: 1435418703}
+  - {fileID: 410191302}
+  m_Father: {fileID: 460182432}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1650329854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,13 +2058,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1650329855}
+  - component: {fileID: 1650329856}
   m_Layer: 0
-  m_Name: PosRed (5)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1650329855
 Transform:
   m_ObjectHideFlags: 0
@@ -1741,12 +2075,25 @@ Transform:
   m_GameObject: {fileID: 1650329854}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.1, z: 19}
+  m_LocalPosition: {x: 1, y: 0.099999994, z: 19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1650329856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650329854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1669982267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,13 +2103,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1669982268}
+  - component: {fileID: 1669982269}
   m_Layer: 0
-  m_Name: PosRed (4)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1669982268
 Transform:
   m_ObjectHideFlags: 0
@@ -1772,12 +2120,25 @@ Transform:
   m_GameObject: {fileID: 1669982267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 22}
+  m_LocalPosition: {x: 0, y: 0.099999994, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1669982269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669982267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1674871977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,13 +2148,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1674871978}
+  - component: {fileID: 1674871979}
   m_Layer: 0
-  m_Name: PosRed (11)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1674871978
 Transform:
   m_ObjectHideFlags: 0
@@ -1803,12 +2165,25 @@ Transform:
   m_GameObject: {fileID: 1674871977}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 0.1, z: 22}
+  m_LocalPosition: {x: 4, y: 0.099999994, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1674871979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674871977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1684903238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,6 +2305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1733881662}
+  - component: {fileID: 1733881663}
   m_Layer: 0
   m_Name: PosGreen
   m_TagString: Untagged
@@ -1952,6 +2328,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1733881663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733881661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 3
 --- !u!1 &1762007966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,13 +2350,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1762007967}
+  - component: {fileID: 1762007968}
   m_Layer: 0
-  m_Name: PosRed (6)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1762007967
 Transform:
   m_ObjectHideFlags: 0
@@ -1977,12 +2367,25 @@ Transform:
   m_GameObject: {fileID: 1762007966}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 20}
+  m_LocalPosition: {x: 0, y: 0.099999994, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1762007968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762007966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1 &1836862053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,6 +2522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1953951087}
+  - component: {fileID: 1953951088}
   m_Layer: 0
   m_Name: PosBlack
   m_TagString: Untagged
@@ -2141,6 +2545,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460182432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1953951088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953951086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 7
 --- !u!1 &2003348429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,13 +2567,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2003348430}
+  - component: {fileID: 2003348431}
   m_Layer: 0
-  m_Name: PosRed (10)
+  m_Name: PosRed
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2003348430
 Transform:
   m_ObjectHideFlags: 0
@@ -2166,12 +2584,25 @@ Transform:
   m_GameObject: {fileID: 2003348429}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 0.1, z: 21}
+  m_LocalPosition: {x: 3, y: 0.099999994, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 460182432}
+  m_Father: {fileID: 1636656730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2003348431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003348429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b75c53ff22f12f47aeb7cb8c570a344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallSpawnPoint
+  ballType: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2182,4 +2613,5 @@ SceneRoots:
   - {fileID: 1391573174}
   - {fileID: 1602830538}
   - {fileID: 260321268}
+  - {fileID: 974190624}
   - {fileID: 460182432}
