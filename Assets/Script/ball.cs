@@ -17,49 +17,38 @@ public class ball : MonoBehaviour
     [SerializeField] int point;
 
     MeshRenderer meshRenderer;
-    Collider col;
+    Collider ballCollider;
 
     public int Point => point;
-    public bool IsCue => point == 0;
 
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        col = GetComponent<Collider>();
+        ballCollider = GetComponent<Collider>();
     }
 
-    public void Apply(int p, Material mat)
+    public void Apply(int points, Material ballMaterial)
     {
-        point = p;
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
-        if (mat != null && meshRenderer != null)
-            meshRenderer.material = mat;
+        point = points;
+
+        meshRenderer = GetComponent<MeshRenderer>();
+        if (ballMaterial != null && meshRenderer != null)
+            meshRenderer.material = ballMaterial;
     }
 
     public void HideBall()
     {
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
-        if (col == null)
-            col = GetComponent<Collider>();
-
-        if (meshRenderer != null)
-            meshRenderer.enabled = false;
-        if (col != null)
-            col.enabled = false;
+        meshRenderer = GetComponent<MeshRenderer>();
+        ballCollider = GetComponent<Collider>();
+        meshRenderer.enabled = false;
+        ballCollider.enabled = false;
     }
 
     public void ShowBall()
     {
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
-        if (col == null)
-            col = GetComponent<Collider>();
-
-        if (meshRenderer != null)
-            meshRenderer.enabled = true;
-        if (col != null)
-            col.enabled = true;
+        meshRenderer = GetComponent<MeshRenderer>();
+        ballCollider = GetComponent<Collider>();
+        meshRenderer.enabled = true;
+        ballCollider.enabled = true;
     }
 }

@@ -14,15 +14,15 @@ public class DriveBall : MonoBehaviour
 
     Rigidbody rb;
     float stillTime;
-
+    int shotCount;
     public bool CanForce => canForce;
 
     void Awake()
     {
         Instance = this;
         rb = GetComponent<Rigidbody>();
-        if (rb != null)
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     void Start()
@@ -34,7 +34,12 @@ public class DriveBall : MonoBehaviour
     {
         if (!canForce || GameManager.instance == null || GameManager.instance.IsLocked)
             return;
-        InputBall();
+
+        if (Input.GetMouseButtonDown(0) && canForce)
+        {
+          RotationBall();
+          ForceBall();
+        }
     }
 
     void FixedUpdate()
@@ -54,89 +59,64 @@ public class DriveBall : MonoBehaviour
         }
     }
 
-    void InputBall()
-    {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-            RotationBall();
 
-        if (Input.GetMouseButtonDown(0))
-            ForceBall();
-    }
 
     void RotationBall()
     {
-        float dir = 0f;
+        float rotateDirection = 0f;
         if (Input.GetKey(KeyCode.A))
-            dir = -1f;
+            rotateDirection = -1f;
         if (Input.GetKey(KeyCode.D))
-            dir = 1f;
-        transform.Rotate(0f, dir * rotateSpeed * Time.deltaTime, 0f);
+            rotateDirection = 1f;
+        transform.Rotate(0f, rotateDirection * rotateSpeed * Time.deltaTime, 0f);
     }
 
     void ForceBall()
     {
-        if (rb == null)
-            return;
-
+        shotCount++;
         canForce = false;
         stillTime = 0f;
         ShowArrow(false);
         rb.AddForce(transform.forward * forcePower, ForceMode.Impulse);
-        GameManager.instance.OnShotUsed();
+       
     }
 
     void ResetPos()
     {
-        ClearMotion();
-        FlattenRotationXZ();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        var euler = transform.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, euler.y, 0f);
+
         canForce = true;
         ShowArrow(true);
-        if (GameManager.instance != null)
-            GameManager.instance.OnCueStopped();
+        GameManager.instance.OnCueStopped(shotCount);
     }
 
     public void RespawnAtCuePoint()
     {
-        ClearMotion();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = cueRespawn.position;
 
-        if (cueRespawn != null)
-            transform.position = cueRespawn.position;
+        var euler = transform.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, euler.y, 0f);
 
-        FlattenRotationXZ();
-
-        var b = GetComponent<ball>();
-        if (b != null)
-            b.ShowBall();
+        GetComponent<ball>().ShowBall();
 
         canForce = true;
         stillTime = 0f;
         ShowArrow(true);
     }
-
-    void ClearMotion()
-    {
-        if (rb == null)
-            return;
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-    }
-
-    void FlattenRotationXZ()
-    {
-        var e = transform.eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, e.y, 0f);
-    }
-
     bool IsAlmostStopped()
     {
-        float sq = stopSpeed * stopSpeed;
-        return rb.linearVelocity.sqrMagnitude < sq
-            && rb.angularVelocity.sqrMagnitude < sq;
+        float stopSpeedSquared = stopSpeed * stopSpeed;
+        return rb.linearVelocity.sqrMagnitude < stopSpeedSquared
+            && rb.angularVelocity.sqrMagnitude < stopSpeedSquared;
     }
 
-    void ShowArrow(bool on)
+    void ShowArrow(bool visible)
     {
-        if (showArrow != null)
-            showArrow.SetActive(on);
+        showArrow.SetActive(visible);
     }
 }

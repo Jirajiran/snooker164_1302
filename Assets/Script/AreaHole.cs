@@ -4,19 +4,12 @@ public class AreaHole : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        var b = other.GetComponent<ball>();
-        if (b == null)
-            b = other.GetComponentInParent<ball>();
-        if (b == null)
+        var pottedBall = other.GetComponent<ball>();
+        if (pottedBall == null)
+            pottedBall = other.GetComponentInParent<ball>();
+        if (pottedBall == null)
             return;
 
-        if (b.IsCue)
-        {
-            GameManager.instance.OnCuePotted();
-            return;
-        }
-
-        GameManager.instance.AddScore(b.Point);
-        b.HideBall();
+        GameManager.instance.BallPotted(pottedBall);
     }
 }

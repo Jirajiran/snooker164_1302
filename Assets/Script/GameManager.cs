@@ -2,6 +2,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class BallSpawn
+{
+    public BallColor ballColor;
+    public Transform point;
+}
+
+[System.Serializable]
+public class BallLook
+{
+    public BallColor ballColor;
+    public Material ballMaterial;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -13,25 +27,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] int playerScore;
 
     [Header("Spawn")]
-    [SerializeField] GameObject[] ballPositions;
+    [SerializeField] BallSpawn[] ballSpawns;
     [SerializeField] GameObject ballPrefab;
-    [SerializeField] Material[] ballMaterials;
+    [SerializeField] BallLook[] ballLooks;
 
     [Header("UI")]
     [SerializeField] TMP_Text pointText;
     [SerializeField] TMP_Text endGameText;
-    [SerializeField] GameObject pausePanel;
-    [SerializeField] GameObject endGamePanel;
+    [SerializeField] Animator pauseAnimator;
+    [SerializeField] Animator endGameAnimator;
 
-    int shotCount;
     bool isPaused;
     bool gameEnded;
-
-    public int PlayerScore
-    {
-        get => playerScore;
-        set => playerScore = value;
-    }
 
     public bool IsLocked => isPaused || gameEnded;
 
@@ -42,120 +49,91 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
-        if (endGamePanel != null)
-            endGamePanel.SetActive(false);
+        if (pauseAnimator != null)
+            pauseAnimator.SetBool("pauseUi", false);
+        if (endGameAnimator != null)
+            endGameAnimator.SetBool("ShowEndGame", false);
         SpawnAllBalls();
-        RefreshPointUI();
-    }
-
-    Material GetBallMaterial(BallColor colorB)
-    {
-        if (colorB == BallColor.White)
-            return null;
-
-        int colorIndex = (int)colorB - 1;
-        if (ballMaterials == null || colorIndex < 0 || colorIndex >= ballMaterials.Length)
-            return null;
-        return ballMaterials[colorIndex];
-    }
-
-    int GetPoint(BallColor colorB)
-    {
-        return colorB switch
-        {
-            BallColor.White => 0,
-            BallColor.Red => 1,
-            BallColor.Yellow => 2,
-            BallColor.Green => 3,
-            BallColor.Brown => 4,
-            BallColor.Blue => 5,
-            BallColor.Pink => 6,
-            BallColor.Black => 7,
-            _ => 0
-        };
-    }
-
-    void SetBall(BallColor colorB, int i)
-    {
-        if (ballPrefab == null || ballPositions == null || i < 0 || i >= ballPositions.Length)
-            return;
-        if (ballPositions[i] == null)
-            return;
-
-        GameObject obj = Instantiate(ballPrefab, ballPositions[i].transform.position, Quaternion.identity);
-        ball b = obj.GetComponent<ball>();
-        if (b == null)
-            b = obj.AddComponent<ball>();
-
-        b.Apply(GetPoint(colorB), GetBallMaterial(colorB));
+        if (pointText != null)
+            pointText.text = playerScore.ToString();
     }
 
     void SpawnAllBalls()
     {
-        if (ballPositions == null || ballPositions.Length == 0)
+        if (ballPrefab == null || ballSpawns == null)
             return;
 
-        int redCount = Mathf.Min(15, ballPositions.Length);
-        for (int i = 0; i < redCount; i++)
-            SetBall(BallColor.Red, i);
-
-        TrySet(BallColor.Yellow, 15);
-        TrySet(BallColor.Green, 16);
-        TrySet(BallColor.Brown, 17);
-        TrySet(BallColor.Blue, 18);
-        TrySet(BallColor.Pink, 19);
-        TrySet(BallColor.Black, 20);
+        foreach (BallSpawn spawn in ballSpawns)
+        {
+            if (spawn.point == null || spawn.ballColor == BallColor.White)
+                continue;
+            SetBall(spawn.ballColor, spawn.point);
+        }
     }
 
-    void TrySet(BallColor colorB, int i)
+    void SetBall(BallColor ballColor, Transform point)
     {
-        if (ballPositions != null && i < ballPositions.Length)
-            SetBall(colorB, i);
+        GameObject ballObject = Instantiate(ballPrefab, point.position, Quaternion.identity);
+        ball spawnedBall = ballObject.GetComponent<ball>();
+        if (spawnedBall == null)
+            spawnedBall = ballObject.AddComponent<ball>();
+
+        spawnedBall.Apply((int)ballColor, GetBallMaterial(ballColor));
     }
 
-    public void AddScore(int p)
+    Material GetBallMaterial(BallColor ballColor)
     {
-        if (gameEnded)
+        if (ballLooks == null)
+            return null;
+        foreach (BallLook look in ballLooks)
+        {
+            if (look.ballColor == ballColor)
+                return look.ballMaterial;
+        }
+        return null;
+    }
+
+    public void BallPotted(ball pottedBall)
+    {
+        if (gameEnded || pottedBall == null)
             return;
-        playerScore += p;
-        RefreshPointUI();
-        if (playerScore > WinScore)
-            EndGame(true);
-    }
 
-    public void OnCuePotted()
-    {
-        if (gameEnded)
-            return;
-        playerScore = Mathf.Max(0, playerScore - CuePotPenalty);
-        RefreshPointUI();
-        if (DriveBall.Instance != null)
-            DriveBall.Instance.RespawnAtCuePoint();
-    }
-
-    public void OnShotUsed()
-    {
-        if (gameEnded)
-            return;
-        shotCount++;
-    }
-
-    public void OnCueStopped()
-    {
-        if (gameEnded)
-            return;
-        if (playerScore > WinScore)
-            EndGame(true);
-        else if (shotCount >= MaxShots)
-            EndGame(false);
-    }
-
-    void RefreshPointUI()
-    {
-        if (pointText != null)
+        if (pottedBall.GetComponent<DriveBall>() != null)
+        {
+            playerScore = Mathf.Max(0, playerScore - CuePotPenalty);
             pointText.text = playerScore.ToString();
+            DriveBall.Instance.RespawnAtCuePoint();
+            return;
+        }
+
+        playerScore += pottedBall.Point;
+        pottedBall.HideBall();
+        pointText.text = playerScore.ToString();
+        TryEndGame(-1);
+    }
+
+    public void OnCueStopped(int shots)
+    {
+        TryEndGame(shots);
+    }
+
+    void TryEndGame(int shots)
+    {
+        if (gameEnded)
+            return;
+
+        bool win = playerScore > WinScore;
+        bool lose = shots >= 0 && shots >= MaxShots && !win;
+        if (!win && !lose)
+            return;
+
+        gameEnded = true;
+        Time.timeScale = 0f;
+            pauseAnimator.SetBool("pauseUi", false);
+            endGameAnimator.SetBool("ShowEndGame", true);
+            endGameText.text = win
+                ? $"You are win\nYour score is {playerScore}"
+                : $"Your are lose\nYour score is {playerScore}";
     }
 
     public void PauseGame()
@@ -164,22 +142,7 @@ public class GameManager : MonoBehaviour
             return;
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
-        if (pausePanel != null)
-            pausePanel.SetActive(isPaused);
-    }
-
-    void EndGame(bool win)
-    {
-        gameEnded = true;
-        Time.timeScale = 0f;
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
-        if (endGamePanel != null)
-            endGamePanel.SetActive(true);
-        if (endGameText != null)
-            endGameText.text = win
-                ? $"ชนะ\nคะแนน {playerScore}"
-                : $"แพ้\nคะแนน {playerScore}";
+            pauseAnimator.SetBool("pauseUi", isPaused);
     }
 
     public void Restart()
