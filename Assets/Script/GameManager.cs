@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     const int CuePotPenalty = 4;
 
     [SerializeField] int playerScore;
+    [SerializeField] int currentTurn;
 
     [Header("Spawn")]
     [SerializeField] BallSpawn[] ballSpawns;
@@ -34,8 +35,12 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] TMP_Text pointText;
     [SerializeField] TMP_Text endGameText;
+    [SerializeField] TMP_Text TurnText;
+    [SerializeField] TMP_Text GetPoint;
+    [SerializeField] TMP_Text MinusPoint;
     [SerializeField] Animator pauseAnimator;
     [SerializeField] Animator endGameAnimator;
+    [SerializeField] Animator UxPoint;
 
     bool isPaused;
     bool gameEnded;
@@ -49,13 +54,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (pauseAnimator != null)
-            pauseAnimator.SetBool("pauseUi", false);
-        if (endGameAnimator != null)
-            endGameAnimator.SetBool("ShowEndGame", false);
+        pauseAnimator.SetBool("pauseUi", false);
+        endGameAnimator.SetBool("ShowEndGame", false);
         SpawnAllBalls();
-        if (pointText != null)
-            pointText.text = playerScore.ToString();
+        pointText.text = $"Point : {playerScore}";
+        currentTurn = 0;
+        UpdateTurnText();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            PauseGame();
     }
 
     void SpawnAllBalls()
@@ -101,19 +111,54 @@ public class GameManager : MonoBehaviour
         if (pottedBall.GetComponent<DriveBall>() != null)
         {
             playerScore = Mathf.Max(0, playerScore - CuePotPenalty);
-            pointText.text = playerScore.ToString();
+            pointText.text = $"Point : {playerScore}";
+            ShowUxPoint(-CuePotPenalty);
             DriveBall.Instance.RespawnAtCuePoint();
             return;
         }
 
-        playerScore += pottedBall.Point;
+        int gained = pottedBall.Point;
+        playerScore += gained;
         pottedBall.HideBall();
-        pointText.text = playerScore.ToString();
+        pointText.text = $"Point : {playerScore}";
+        ShowUxPoint(gained);
         TryEndGame(-1);
+    }
+
+    void ShowUxPoint(int delta)
+    {
+        if (UxPoint == null)
+            return;
+
+        if (delta > 0)
+        {
+            if (GetPoint != null)
+                GetPoint.text = $"+{delta}";
+            UxPoint.SetTrigger("GetPointAni");
+        }
+        else if (delta < 0)
+        {
+            if (MinusPoint != null)
+                MinusPoint.text = delta.ToString();
+            UxPoint.SetTrigger("MinusPointAni");
+        }
+    }
+
+    public void SetTurn(int turn)
+    {
+        currentTurn = turn;
+        UpdateTurnText();
+    }
+
+    void UpdateTurnText()
+    {
+        if (TurnText != null)
+            TurnText.text = $"Turn : {currentTurn} / {MaxShots}";
     }
 
     public void OnCueStopped(int shots)
     {
+        SetTurn(shots);
         TryEndGame(shots);
     }
 
@@ -128,12 +173,22 @@ public class GameManager : MonoBehaviour
             return;
 
         gameEnded = true;
-        Time.timeScale = 0f;
+        if (pauseAnimator != null)
             pauseAnimator.SetBool("pauseUi", false);
+        if (endGameAnimator != null)
             endGameAnimator.SetBool("ShowEndGame", true);
+        if (endGameText != null)
             endGameText.text = win
-                ? $"You are win\nYour score is {playerScore}"
-                : $"Your are lose\nYour score is {playerScore}";
+                ? $"You are win\nYour score is {playerScore} > 9"
+                : $"Your are lose\nYour score is {playerScore} < 9";
+
+        if (AudioManager.instance != null)
+        {
+            if (win)
+                AudioManager.instance.PlayWinMusic();
+            else
+                AudioManager.instance.PlayLoseMusic();
+        }
     }
 
     public void PauseGame()
@@ -142,7 +197,10 @@ public class GameManager : MonoBehaviour
             return;
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
+        if (pauseAnimator != null)
             pauseAnimator.SetBool("pauseUi", isPaused);
+        if (AudioManager.instance != null)
+            AudioManager.instance.SetGameplayMusicPaused(isPaused);
     }
 
     public void Restart()

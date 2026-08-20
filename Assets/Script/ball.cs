@@ -23,32 +23,66 @@ public class ball : MonoBehaviour
 
     void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        ballCollider = GetComponent<Collider>();
+        CacheComponents();
+    }
+
+    void CacheComponents()
+    {
+        if (meshRenderer == null)
+            meshRenderer = GetComponentInChildren<MeshRenderer>(true);
+        if (ballCollider == null)
+            ballCollider = GetComponent<Collider>();
     }
 
     public void Apply(int points, Material ballMaterial)
     {
         point = points;
-
-        meshRenderer = GetComponent<MeshRenderer>();
+        CacheComponents();
         if (ballMaterial != null && meshRenderer != null)
             meshRenderer.material = ballMaterial;
     }
 
     public void HideBall()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        ballCollider = GetComponent<Collider>();
-        meshRenderer.enabled = false;
-        ballCollider.enabled = false;
+        CacheComponents();
+        if (meshRenderer != null)
+            meshRenderer.enabled = false;
+        if (ballCollider != null)
+            ballCollider.enabled = false;
     }
 
     public void ShowBall()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        ballCollider = GetComponent<Collider>();
-        meshRenderer.enabled = true;
-        ballCollider.enabled = true;
+        CacheComponents();
+        if (meshRenderer != null)
+            meshRenderer.enabled = true;
+        if (ballCollider != null)
+            ballCollider.enabled = true;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (AudioManager.instance == null)
+            return;
+
+        float vol = Mathf.Clamp01(collision.relativeVelocity.magnitude / 8f);
+        if (vol < 0.05f)
+            return;
+
+        ball otherBall = collision.collider.GetComponentInParent<ball>();
+        if (otherBall != null)
+        {
+            if (otherBall == this)
+                return;
+            // Only one of the two balls plays the hit.
+            if (GetInstanceID() > otherBall.GetInstanceID())
+                return;
+            AudioManager.instance.PlayBallHit(vol);
+            return;
+        }
+
+        string hitName = collision.collider.gameObject.name;
+        if (hitName.StartsWith("Edge") || hitName.Contains("Edge"))
+            AudioManager.instance.PlayBallHit(vol);
     }
 }

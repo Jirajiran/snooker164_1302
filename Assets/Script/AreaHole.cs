@@ -10,6 +10,8 @@ public class AreaHole : MonoBehaviour
         if (pottedBall == null)
             return;
 
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayHoldHole();
         GameManager.instance.BallPotted(pottedBall);
     }
 }
