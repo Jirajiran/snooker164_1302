@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator pauseAnimator;
     [SerializeField] Animator endGameAnimator;
     [SerializeField] Animator UxPoint;
+    [SerializeField] Animator characterAnimator;
+    [SerializeField] string menuSceneName = "Menu";
 
     bool isPaused;
     bool gameEnded;
@@ -56,6 +58,11 @@ public class GameManager : MonoBehaviour
     {
         pauseAnimator.SetBool("pauseUi", false);
         endGameAnimator.SetBool("ShowEndGame", false);
+        if (characterAnimator != null)
+        {
+            characterAnimator.SetBool("WinPose", false);
+            characterAnimator.SetBool("LosePose", false);
+        }
         SpawnAllBalls();
         pointText.text = $"Point : {playerScore}";
         currentTurn = 0;
@@ -189,6 +196,12 @@ public class GameManager : MonoBehaviour
             else
                 AudioManager.instance.PlayLoseMusic();
         }
+
+        if (characterAnimator != null)
+        {
+            characterAnimator.SetBool("WinPose", win);
+            characterAnimator.SetBool("LosePose", !win);
+        }
     }
 
     public void PauseGame()
@@ -207,5 +220,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GoToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(menuSceneName);
     }
 }

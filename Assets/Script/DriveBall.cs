@@ -52,6 +52,8 @@ public class DriveBall : MonoBehaviour
             return;
 
         RotationBall();
+        if (Input.GetKeyDown(KeyCode.Space))
+            Shoot();
     }
 
     void LateUpdate()
