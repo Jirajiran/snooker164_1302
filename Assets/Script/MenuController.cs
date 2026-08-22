@@ -5,17 +5,37 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] string loadingSceneName = "Loading";
-    [SerializeField] Button startButton;
+    
+    [SerializeField] Button newGameButton;
+    [SerializeField] Button loadGameButton;
     [SerializeField] Button exitButton;
-    [SerializeField] AudioSource sfxSource;
-    [SerializeField] AudioClip typingClip;
-    [SerializeField] float loadDelay = 0.08f;
+    [SerializeField] Button settingButton;
+    [SerializeField] Button CloseSettingButton;
+    [SerializeField] GameObject settingPanel;
+    
+    float loadDelay = 0.08f;
+    string loadingSceneName = "Loading";
 
     void Awake()
     {
-        WireButton(startButton, StartGame);
+        WireButton(newGameButton, NewGame);
+        WireButton(loadGameButton, LoadGame);
         WireButton(exitButton, ExitGame);
+        WireButton(settingButton, () => OpenSetting(true));
+        WireButton(CloseSettingButton, () => OpenSetting(false));
+    }
+
+    void Start()
+    {
+        UpdateLoadButton();
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayMusic(MusicTrack.Menu);
+    }
+
+    void UpdateLoadButton()
+    {
+        if (loadGameButton != null)
+            loadGameButton.interactable = Setting.HasSave();
     }
 
     void WireButton(Button btn, UnityEngine.Events.UnityAction onClick)
@@ -35,17 +55,20 @@ public class MenuController : MonoBehaviour
 
     void PlayTyping()
     {
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.PlayTyping();
-            return;
-        }
-        if (sfxSource != null && typingClip != null)
-            sfxSource.PlayOneShot(typingClip);
+        AudioManager.instance?.PlayTyping();
     }
 
-    public void StartGame()
+    public void NewGame()
     {
+        Setting.PrepareNewGame();
+        StartCoroutine(LoadGameScene());
+    }
+
+    public void LoadGame()
+    {
+        if (!Setting.HasSave())
+            return;
+        Setting.PrepareLoadGame();
         StartCoroutine(LoadGameScene());
     }
 
@@ -58,10 +81,12 @@ public class MenuController : MonoBehaviour
 
     public void ExitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
+    }
+
+    public void OpenSetting(bool flag)
+    {
+        if (settingPanel != null)
+            settingPanel.SetActive(flag);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -56,23 +57,44 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        pauseAnimator.SetBool("pauseUi", false);
-        endGameAnimator.SetBool("ShowEndGame", false);
+        if (pauseAnimator != null)
+            pauseAnimator.SetBool("pauseUi", false);
+        if (endGameAnimator != null)
+            endGameAnimator.SetBool("ShowEndGame", false);
         if (characterAnimator != null)
         {
             characterAnimator.SetBool("WinPose", false);
             characterAnimator.SetBool("LosePose", false);
         }
-        SpawnAllBalls();
-        pointText.text = $"Point : {playerScore}";
-        currentTurn = 0;
-        UpdateTurnText();
+
+        if (Setting.ShouldLoadOnStart() && Setting.HasSave())
+            LoadSaveGame();
+        else
+            StartNewGame();
+
+        AudioManager.instance?.PlayMusic(MusicTrack.Gameplay);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             PauseGame();
+    }
+
+    void StartNewGame()
+    {
+        gameEnded = false;
+        playerScore = 0;
+        currentTurn = 0;
+        SpawnAllBalls();
+        RefreshUI();
+    }
+
+    void RefreshUI()
+    {
+        if (pointText != null)
+            pointText.text = $"Point : {playerScore}";
+        UpdateTurnText();
     }
 
     void SpawnAllBalls()
@@ -142,12 +164,14 @@ public class GameManager : MonoBehaviour
             if (GetPoint != null)
                 GetPoint.text = $"+{delta}";
             UxPoint.SetTrigger("GetPointAni");
+            AudioManager.instance?.PlayGetPoint();
         }
         else if (delta < 0)
         {
             if (MinusPoint != null)
                 MinusPoint.text = delta.ToString();
             UxPoint.SetTrigger("MinusPointAni");
+            AudioManager.instance?.PlayMinusPoint();
         }
     }
 
@@ -180,6 +204,8 @@ public class GameManager : MonoBehaviour
             return;
 
         gameEnded = true;
+        Setting.DeleteSave();
+
         if (pauseAnimator != null)
             pauseAnimator.SetBool("pauseUi", false);
         if (endGameAnimator != null)
@@ -219,12 +245,141 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
+        Setting.PrepareNewGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToMenu()
     {
+        SaveAndGoToMenu();
+    }
+
+    public void SaveAndGoToMenu()
+    {
+        if (!gameEnded)
+            SaveGame();
         Time.timeScale = 1f;
         SceneManager.LoadScene(menuSceneName);
+    }
+
+    public void SaveGame()
+    {
+        int shots = DriveBall.Instance != null ? DriveBall.Instance.ShotCount : 0;
+        Setting.SaveGameState(playerScore, currentTurn, shots);
+
+        if (DriveBall.Instance != null)
+        {
+            Transform cue = DriveBall.Instance.transform;
+            Setting.SaveCue(
+                cue.position,
+                cue.eulerAngles.y,
+                shots,
+                DriveBall.Instance.CanForce);
+        }
+
+        ball[] balls = GetSortedPlayBalls();
+        for (int i = 0; i < balls.Length; i++)
+        {
+            ball b = balls[i];
+            Setting.SaveBall(
+                i,
+                b.Point,
+                b.transform.position,
+                b.transform.eulerAngles.y,
+                b.IsHidden);
+        }
+
+        SaveCameraState();
+    }
+
+    void SaveCameraState()
+    {
+        var camSwitch = FindFirstObjectByType<CameraSwitch>();
+        int camIndex = camSwitch != null ? camSwitch.CurrentIndex : 0;
+
+        var followCam = FindFirstObjectByType<FollowBallCamera>();
+        if (followCam != null)
+        {
+            Transform t = followCam.transform;
+            Setting.SaveCamera(camIndex, t.position, t.eulerAngles);
+        }
+    }
+
+    void LoadCameraState()
+    {
+        var camSwitch = FindFirstObjectByType<CameraSwitch>();
+        if (!Setting.TryLoadCamera(out int camIndex, out Vector3 camPos, out Vector3 camEuler))
+        {
+            camSwitch?.ApplySavedIndex(0);
+            return;
+        }
+
+        var followCam = FindFirstObjectByType<FollowBallCamera>();
+        if (followCam != null)
+            followCam.ApplySavedTransform(camPos, camEuler);
+
+        if (camSwitch != null)
+            camSwitch.ApplySavedIndex(camIndex);
+    }
+
+    ball[] GetSortedPlayBalls()
+    {
+        ball[] all = FindObjectsByType<ball>(FindObjectsSortMode.None);
+        var list = new List<ball>();
+        foreach (ball b in all)
+        {
+            if (b.GetComponent<DriveBall>() == null)
+                list.Add(b);
+        }
+        list.Sort((a, b) =>
+        {
+            int byPoint = a.Point.CompareTo(b.Point);
+            if (byPoint != 0)
+                return byPoint;
+            int byX = a.transform.position.x.CompareTo(b.transform.position.x);
+            if (byX != 0)
+                return byX;
+            return a.transform.position.z.CompareTo(b.transform.position.z);
+        });
+        return list.ToArray();
+    }
+
+    public void LoadSaveGame()
+    {
+        gameEnded = false;
+        playerScore = Setting.LoadScore();
+        currentTurn = Setting.LoadTurn();
+        int shots = Setting.LoadShots();
+
+        SpawnAllBalls();
+
+        ball[] balls = GetSortedPlayBalls();
+        for (int i = 0; i < balls.Length; i++)
+        {
+            if (!Setting.TryLoadBall(i, out _, out Vector3 pos, out float rotY, out bool hidden))
+                continue;
+
+            balls[i].transform.position = pos;
+            balls[i].transform.rotation = Quaternion.Euler(0f, rotY, 0f);
+            if (hidden)
+                balls[i].HideBall();
+            else
+                balls[i].ShowBall();
+        }
+
+        if (DriveBall.Instance != null &&
+            Setting.TryLoadCue(out Vector3 cuePos, out float cueRotY, out int cueShots, out bool aiming))
+        {
+            DriveBall.Instance.ApplySaveState(cuePos, cueRotY, cueShots, aiming);
+            currentTurn = cueShots;
+        }
+        else if (DriveBall.Instance != null)
+        {
+            DriveBall.Instance.SetShotCount(shots);
+            currentTurn = shots;
+        }
+
+        LoadCameraState();
+        RefreshUI();
     }
 }

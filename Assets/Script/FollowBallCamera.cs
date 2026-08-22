@@ -18,6 +18,33 @@ public class FollowBallCamera : MonoBehaviour
         hasOffset = false;
     }
 
+    public void ApplySavedTransform(Vector3 pos, Vector3 euler)
+    {
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(euler);
+        lockedPitch = euler.x;
+        followYaw = euler.y;
+        RebuildOffsetFromTransform();
+    }
+
+    void RebuildOffsetFromTransform()
+    {
+        if (ball == null && DriveBall.Instance != null)
+            ball = DriveBall.Instance.transform;
+        if (ball == null)
+        {
+            hasOffset = false;
+            return;
+        }
+
+        Quaternion yawOnly = Quaternion.Euler(0f, followYaw, 0f);
+        Vector3 local = Quaternion.Inverse(yawOnly) * (transform.position - ball.position);
+        xOffset = local.x;
+        heightOffset = local.y;
+        zOffset = local.z;
+        hasOffset = true;
+    }
+
     void Awake()
     {
         lockedPitch = transform.eulerAngles.x;

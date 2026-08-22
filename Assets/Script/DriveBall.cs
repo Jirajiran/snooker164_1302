@@ -23,6 +23,7 @@ public class DriveBall : MonoBehaviour
     Vector3 arrowLocalOffset;
     float arrowYawOffset;
     public bool CanForce => canForce;
+    public int ShotCount => shotCount;
 
     void Awake()
     {
@@ -136,6 +137,25 @@ public class DriveBall : MonoBehaviour
         SetShotButton(true);
         currentTurn = 0f;
         GameManager.instance.OnCueStopped(shotCount);
+    }
+
+    public void SetShotCount(int shots)
+    {
+        shotCount = shots;
+    }
+
+    public void ApplySaveState(Vector3 pos, float rotY, int shots, bool aiming)
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(0f, rotY, 0f);
+        shotCount = shots;
+        stillTime = 0f;
+        currentTurn = 0f;
+        SetAimMode(aiming);
+        ShowArrow(aiming);
+        SetShotButton(aiming);
     }
 
     public void RespawnAtCuePoint()

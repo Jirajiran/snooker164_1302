@@ -21,6 +21,15 @@ public class ball : MonoBehaviour
 
     public int Point => point;
 
+    public bool IsHidden
+    {
+        get
+        {
+            CacheComponents();
+            return meshRenderer != null && !meshRenderer.enabled;
+        }
+    }
+
     void Awake()
     {
         CacheComponents();

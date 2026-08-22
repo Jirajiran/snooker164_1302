@@ -5,9 +5,12 @@ public class CameraSwitch : MonoBehaviour
     [SerializeField] Camera[] cameras;
     int index;
 
+    public int CurrentIndex => index;
+
     void Start()
     {
-        Show(0);
+        if (!(Setting.ShouldLoadOnStart() && Setting.HasSave()))
+            Show(0);
     }
 
     void Update()
@@ -38,6 +41,11 @@ public class CameraSwitch : MonoBehaviour
     public void PrevCamera()
     {
         Show(index - 1);
+    }
+
+    public void ApplySavedIndex(int savedIndex)
+    {
+        Show(savedIndex);
     }
 
     void Show(int next)
